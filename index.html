@@ -192,7 +192,38 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   
   <!-- Config and App Logic Scripts with Cache Busting -->
-  <script src="config.js?v=1.0.1"></script>
-  <script src="app_v4.js?v=1.0.0"></script>
+  <script>
+    // 호스트네임을 검사하여 로컬 환경과 Vercel 운영 배포 환경의 로딩 분기 및 순차 비동기 제어 처리
+    (function() {
+      const isLocal = ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+      const script = document.createElement('script');
+      
+      // 설정 파일이 완벽히 로드된 후 메인 앱 로직을 순차 실행
+      function loadMainApp() {
+        console.log('Configuration loaded. Executing main application...');
+        const appScript = document.createElement('script');
+        appScript.src = 'app_v4.js?v=1.0.0';
+        document.head.appendChild(appScript);
+      }
+      
+      script.onload = loadMainApp;
+      
+      if (isLocal) {
+        console.log('Local environment detected. Loading local config.js directly.');
+        script.src = 'config.js?v=1.0.1';
+      } else {
+        console.log('Production environment detected. Loading Vercel environment variables API.');
+        script.src = '/api/config.js?v=1.0.1';
+        script.onerror = function() {
+          console.warn('Failed to load Vercel API config. Falling back to local config.js...');
+          const fallbackScript = document.createElement('script');
+          fallbackScript.onload = loadMainApp;
+          fallbackScript.src = 'config.js?v=1.0.1';
+          document.head.appendChild(fallbackScript);
+        };
+      }
+      document.head.appendChild(script);
+    })();
+  </script>
 </body>
 </html>

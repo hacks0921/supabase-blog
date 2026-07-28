@@ -1,4 +1,4 @@
-export default function handler(req, res) {
+module.exports = (req, res) => {
   // 브라우저에서 스크립트 리소스로 실행되도록 MIME타입 헤더 추가
   res.setHeader('Content-Type', 'application/javascript');
   
@@ -11,4 +11,4 @@ export default function handler(req, res) {
       SUPABASE_ANON_KEY: "${key}"
     };
   `);
-}
+};

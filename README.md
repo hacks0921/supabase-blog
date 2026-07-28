@@ -12,7 +12,7 @@
 ## 📁 프로젝트 파일 구조
 - `index.html`: 블로그 마크업 및 CDN 라이브러리 로더를 담은 메인 단일 HTML 문서
 - `style.css`: 에메랄드(#3ecf8e) 포인트를 적용한 벨로그 스타일 반응형 다크 테마 스타일시트
-- `app_v4.js`: Supabase CRUD, Auth, 이미지 업로드, 라우팅 및 렌더링을 제어하는 메인 비즈니스 로직 자바스크립트
+- `app_v5.js`: Supabase CRUD, Auth, 이미지 업로드, 댓글, 라우팅 및 렌더링을 제어하는 메인 비즈니스 로직 자바스크립트
 - `api/config.js`: Vercel 배포 시 환경변수를 주입하기 위해 작성된 Node.js 서버리스 API 함수
 - `database.sql`: Supabase 테이블 정의, RLS 보안 정책 및 RPC 함수 생성을 위한 SQL 스크립트
 - `config.js`: 로컬 호스트 테스트용 실제 Supabase 주소 및 Anon Key 비공개 설정 파일 (Git 무시)
@@ -32,7 +32,7 @@
 
 ### 1. Database 테이블 및 RPC 함수 설정
 Supabase 대시보드 -> **SQL Editor**로 이동하여 [database.sql](database.sql) 파일의 쿼리문을 그대로 복사해 붙여넣고 **Run** 버튼을 실행해 줍니다.
-- `posts` 및 `post_likes` 테이블 생성
+- `posts`, `post_likes`, `post_comments` 테이블 생성
 - 비회원 읽기 허용 및 작성자만 쓰기/수정이 가능한 RLS(Row Level Security) 정책 수립
 - 안전하게 조회수를 +1 올려주는 `increment_views` RPC 함수 생성
 

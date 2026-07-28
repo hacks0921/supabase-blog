@@ -110,6 +110,19 @@
             <input type="text" id="input-post-title" class="form-control" placeholder="제목을 입력하세요" required>
           </div>
           
+          <!-- Image Upload Block -->
+          <div class="form-group">
+            <label>이미지 첨부 (Supabase Storage)</label>
+            <div class="image-upload-wrapper">
+              <button type="button" class="btn btn-secondary" id="btn-trigger-upload">
+                <span>📁</span> 이미지 파일 선택
+              </button>
+              <input type="file" id="input-post-image" accept="image/*" style="display: none;">
+              <span class="upload-status-text" id="upload-status-message">선택된 파일 없음</span>
+              <div class="upload-spinner" id="upload-spinner-ui" style="display: none;"></div>
+            </div>
+          </div>
+          
           <div class="editor-layout">
             <div class="form-group">
               <label for="textarea-post-content">본문 (Markdown 지원)</label>
@@ -180,6 +193,6 @@
   
   <!-- Config and App Logic Scripts with Cache Busting -->
   <script src="config.js?v=1.0.1"></script>
-  <script src="app_v2.js?v=1.0.0"></script>
+  <script src="app_v3.js?v=1.0.0"></script>
 </body>
 </html>

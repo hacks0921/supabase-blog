@@ -1,5 +1,5 @@
 /**
- * DevLog - 모던 블로그 & 게시판 SPA 비즈니스 로직 및 UI 연동 스크립트
+ * DevLog - 모던 블로그 & 게시판 SPA 비즈니스 로직 및 UI 연동 스크립트 (Storage 이미지 업로드 지원)
  * 
  * 작성일: 2026-07-28
  * 작성자: Antigravity AI Coding Assistant
@@ -514,6 +514,11 @@ async function setupPostForm(id) {
   const form = document.getElementById('blog-post-form');
   form.reset();
   
+  // 이미지 업로드 UI 상태도 초기화
+  document.getElementById('upload-status-message').innerText = '선택된 파일 없음';
+  document.getElementById('upload-spinner-ui').style.display = 'none';
+  document.getElementById('btn-trigger-upload').disabled = false;
+  
   if (id) {
     // 수정 모드
     formTitle.innerText = '게시글 수정하기';
@@ -634,6 +639,87 @@ async function deletePost() {
   }
 }
 
+// 8-6. Supabase Storage 이미지 업로드 연동 로직
+async function handleImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  // 로그인 검증
+  if (!STATE.session || !STATE.session.user) {
+    showToast('이미지를 업로드하려면 로그인이 필요합니다.', 'error');
+    showAuthModal('login');
+    return;
+  }
+  
+  // 파일 타입 검증 (이미지만 허용)
+  if (!file.type.startsWith('image/')) {
+    showToast('이미지 파일만 업로드할 수 있습니다.', 'error');
+    return;
+  }
+  
+  const uploadButton = document.getElementById('btn-trigger-upload');
+  const statusMessage = document.getElementById('upload-status-message');
+  const spinner = document.getElementById('upload-spinner-ui');
+  const contentTextarea = document.getElementById('textarea-post-content');
+  
+  // UI 비활성화 및 로딩 표시
+  uploadButton.disabled = true;
+  spinner.style.display = 'block';
+  statusMessage.innerText = '이미지 업로드 중...';
+  
+  // 유니크한 업로드 파일명 경로 가공 (사용자 ID 폴더/타임스탬프_파일명)
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+  const filePath = `${STATE.session.user.id}/${fileName}`;
+  
+  try {
+    // Supabase Storage 버킷 'blog-attachments'로 파일 업로드
+    const { data, error } = await supabaseClient.storage
+      .from('blog-attachments')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      });
+      
+    if (error) throw error;
+    
+    // 업로드된 파일의 Public URL 정보 가져오기
+    const { data: { publicUrl } } = supabaseClient.storage
+      .from('blog-attachments')
+      .getPublicUrl(filePath);
+      
+    // 본문 textarea의 현재 커서(포커스) 위치에 마크다운 이미지 삽입
+    const markdownImageTag = `\n![이미지 설명](${publicUrl})\n`;
+    insertTextAtCursor(contentTextarea, markdownImageTag);
+    
+    statusMessage.innerText = `업로드 완료: ${file.name}`;
+    showToast('이미지가 성공적으로 첨부되었습니다!', 'success');
+  } catch (error) {
+    logError('Image Upload to Storage', error);
+    statusMessage.innerText = '업로드 실패';
+    showToast('이미지 업로드 중 오류가 발생했습니다. Storage 설정을 확인해주세요.', 'error');
+  } finally {
+    uploadButton.disabled = false;
+    spinner.style.display = 'none';
+    // 다음 선택을 위해 파일 input 초기화
+    e.target.value = '';
+  }
+}
+
+// 텍스트 영역의 커서 위치에 문구를 삽입하는 헬퍼 함수
+function insertTextAtCursor(textarea, textToInsert) {
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+  const originalText = textarea.value;
+  
+  textarea.value = originalText.substring(0, startPos) + textToInsert + originalText.substring(endPos);
+  
+  // 삽입 완료 후 커서를 삽입된 문구의 끝 지점으로 이동 및 포커스 복원
+  const nextCursorPos = startPos + textToInsert.length;
+  textarea.selectionStart = textarea.selectionEnd = nextCursorPos;
+  textarea.focus();
+}
+
 // 9. 유틸리티: HTML 이스케이프 (XSS 방지)
 function escapeHTML(str) {
   if (!str) return '';
@@ -702,6 +788,18 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.hash = ROUTE_HASH.LIST;
     }
   });
+  
+  // 이미지 업로드 버튼 및 파일 인풋 이벤트 바인딩
+  const imageInput = document.getElementById('input-post-image');
+  const triggerButton = document.getElementById('btn-trigger-upload');
+  
+  if (triggerButton && imageInput) {
+    triggerButton.addEventListener('click', () => {
+      imageInput.click();
+    });
+    
+    imageInput.addEventListener('change', handleImageUpload);
+  }
   
   // 10-3. Supabase Auth 세션 감지
   if (initialized && supabaseClient) {

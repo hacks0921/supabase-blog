@@ -872,3 +872,30 @@ textarea.form-control {
     width: 100%;
   }
 }
+
+/* Image Upload UI Styles */
+.image-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-top: 0.5rem;
+}
+
+.upload-status-text {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  word-break: break-all;
+}
+
+.upload-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(62, 207, 142, 0.1);
+  border-top-color: var(--point-emerald);
+  border-radius: 50%;
+  animation: spin 0.8s infinite linear;
+}

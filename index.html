@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevLog | 나만의 모던 블로그 & 게시판</title>
+  <meta name="description" content="Supabase와 Vanilla JS로 만든 모던한 벨로그 스타일 다크 테마 블로그 & 게시판 웹앱입니다.">
+  
+  <!-- CSS Link -->
+  <link rel="stylesheet" href="style.css?v=1.0.1">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header class="header-wrapper">
+    <div class="header-container">
+      <h1 class="logo" id="logo-btn" role="button" aria-label="메인 페이지로 이동">
+        <span class="logo-icon">⚡</span>DevLog
+      </h1>
+      
+      <nav class="nav-actions" aria-label="사용자 네비게이션">
+        <!-- Auth status and Actions -->
+        <div class="user-info" id="user-info-area" style="display: none;">
+          <span class="user-email" id="display-user-email"></span>
+        </div>
+        
+        <button class="btn btn-secondary" id="btn-show-login" aria-haspopup="dialog">로그인 / 가입</button>
+        <button class="btn btn-primary" id="btn-nav-write" style="display: none;">새 글 쓰기</button>
+        <button class="btn btn-secondary" id="btn-auth-logout" style="display: none;">로그아웃</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+    
+    <!-- 1. Posts List Section -->
+    <section id="section-posts-list" class="app-section active">
+      <div class="list-header">
+        <h2>최신 트렌딩 포스트</h2>
+      </div>
+      
+      <!-- Spinner -->
+      <div class="spinner-container" id="posts-list-spinner">
+        <div class="spinner"></div>
+      </div>
+      
+      <!-- Posts Grid -->
+      <div class="posts-grid" id="posts-grid-container" style="display: none;">
+        <!-- Dynamic post cards loaded here -->
+      </div>
+      
+      <!-- Empty State -->
+      <div class="empty-state" id="posts-empty-state" style="display: none;">
+        <div class="empty-icon">📭</div>
+        <p>등록된 게시글이 없습니다. 첫 번째 글을 작성해보세요!</p>
+      </div>
+    </section>
+
+    <!-- 2. Post Detail Section -->
+    <section id="section-post-detail" class="app-section">
+      <div class="detail-header">
+        <h2 class="detail-title" id="detail-title">게시글 제목</h2>
+        
+        <div class="detail-meta-wrapper">
+          <div class="detail-meta">
+            <span id="detail-author">작성자</span>
+            <span class="bullet-separator">•</span>
+            <span id="detail-date">작성일</span>
+            <span class="bullet-separator">•</span>
+            <span id="detail-views-count">조회수 0</span>
+          </div>
+          
+          <div class="detail-actions" id="detail-owner-actions" style="display: none;">
+            <button class="btn btn-secondary" id="btn-post-edit">수정</button>
+            <button class="btn btn-danger" id="btn-post-delete">삭제</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Rendered Markdown Body -->
+      <article class="detail-content markdown-body" id="detail-markdown-content">
+        <!-- Rendered markdown html here -->
+      </article>
+      
+      <!-- Like Heart Button Section -->
+      <div class="detail-footer-section">
+        <div class="like-button-container">
+          <button class="btn-like" id="btn-like-toggle" aria-label="좋아요 토글">❤️</button>
+          <span class="like-count" id="detail-like-count">0</span>
+        </div>
+      </div>
+      
+      <!-- Navigation Back -->
+      <div>
+        <button class="btn btn-secondary" id="btn-back-to-list">목록으로 돌아가기</button>
+      </div>
+    </section>
+
+    <!-- 3. Post Write / Edit Form Section -->
+    <section id="section-post-form" class="app-section">
+      <div class="form-card">
+        <h2 class="form-title" id="form-section-title">새 글 작성하기</h2>
+        
+        <form id="blog-post-form" novalidate>
+          <input type="hidden" id="form-post-id">
+          
+          <div class="form-group">
+            <label for="input-post-title">제목</label>
+            <input type="text" id="input-post-title" class="form-control" placeholder="제목을 입력하세요" required>
+          </div>
+          
+          <div class="editor-layout">
+            <div class="form-group">
+              <label for="textarea-post-content">본문 (Markdown 지원)</label>
+              <textarea id="textarea-post-content" class="form-control" placeholder="마크다운 문법으로 이야기를 작성해보세요." required></textarea>
+            </div>
+            
+            <!-- Markdown Cheat Sheet Guide -->
+            <aside class="markdown-guide">
+              <div class="markdown-guide-title">💡 마크다운 작성 가이드</div>
+              <ul>
+                <li><strong># 제목1</strong>, <strong>## 제목2</strong>로 구조화</li>
+                <li><strong>**굵게**</strong>, <em>*기울임*</em> 강조</li>
+                <li>`code` 및 인라인 코드 표현</li>
+                <li>```javascript<br>// 코드블록<br>```</li>
+                <li>&gt; 인용구 활용</li>
+                <li>[링크이름](URL)로 하이퍼링크</li>
+                <li>-[공백] 리스트 항목 작성</li>
+              </ul>
+            </aside>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="btn-form-cancel">취소</button>
+            <button type="submit" class="btn btn-primary" id="btn-form-submit">저장하기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Login & Register Modal Dialog -->
+  <div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+      <button class="modal-close" id="btn-close-modal" aria-label="닫기">&times;</button>
+      
+      <div class="modal-header">
+        <h2 id="modal-title">로그인</h2>
+      </div>
+      
+      <form id="auth-form" novalidate>
+        <div class="form-group">
+          <label for="input-auth-email">이메일 주소</label>
+          <input type="email" id="input-auth-email" class="form-control" placeholder="example@domain.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="input-auth-password">비밀번호</label>
+          <input type="password" id="input-auth-password" class="form-control" placeholder="6자리 이상 비밀번호 입력" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="btn-auth-submit" style="width: 100%; justify-content: center; margin-top: 1rem;">로그인</button>
+      </form>
+      
+      <div class="modal-toggle-msg">
+        <span id="modal-toggle-text">계정이 없으신가요?</span>
+        <span class="modal-toggle-link" id="btn-toggle-auth-mode">회원가입하기</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Area -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- External CDN Libraries (Supabase JS client v2, marked.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Config and App Logic Scripts with Cache Busting -->
+  <script src="config.js?v=1.0.1"></script>
+  <script src="app_v2.js?v=1.0.0"></script>
+</body>
+</html>

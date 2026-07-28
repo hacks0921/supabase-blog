@@ -91,6 +91,33 @@
         </div>
       </div>
       
+      <!-- Comments Section -->
+      <div class="comments-section">
+        <h3 class="comments-title">
+          <span>💬</span> 댓글 <span class="comments-count" id="detail-comments-count">0</span>
+        </h3>
+        
+        <!-- Comment Write Form -->
+        <div class="comment-write-area">
+          <!-- 비로그인 상태 안내 -->
+          <div class="comment-auth-fallback" id="comment-auth-fallback-msg">
+            댓글을 작성하려면 <span class="fallback-login-link" id="btn-comment-login-trigger" role="button">로그인</span>이 필요합니다.
+          </div>
+          <!-- 로그인 상태 양식 -->
+          <form class="comment-form" id="comment-write-form" style="display: none;">
+            <textarea class="comment-textarea" id="textarea-comment-content" placeholder="댓글을 입력해 보세요. 타인을 배려하는 마음을 담아주세요." required></textarea>
+            <div class="comment-form-actions">
+              <button type="submit" class="btn btn-primary btn-comment-submit" id="btn-comment-submit">댓글 작성</button>
+            </div>
+          </form>
+        </div>
+        
+        <!-- Comments List Container -->
+        <div class="comments-list" id="detail-comments-list">
+          <!-- Comments generated here dynamically -->
+        </div>
+      </div>
+      
       <!-- Navigation Back -->
       <div>
         <button class="btn btn-secondary" id="btn-back-to-list">목록으로 돌아가기</button>
@@ -202,7 +229,7 @@
       function loadMainApp() {
         console.log('Configuration loaded. Executing main application...');
         const appScript = document.createElement('script');
-        appScript.src = 'app_v4.js?v=1.0.0';
+        appScript.src = 'app_v5.js?v=1.0.0';
         document.head.appendChild(appScript);
       }
       

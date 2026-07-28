@@ -753,7 +753,7 @@ function escapeHTML(str) {
 }
 
 // 10. 이벤트 바인딩 및 초기화
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
   // 10-1. Supabase 초기화 수행
   const initialized = initSupabase();
   
@@ -845,4 +845,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('hashchange', handleRouting);
     handleRouting();
   }
-});
+}
+
+// DOM 구성 완료 여부에 맞춰 안전하게 즉시 혹은 DOMContentLoaded 시점에 앱 실행
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}

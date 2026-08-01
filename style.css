@@ -1,21 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-/* CSS Variables */
+/* CSS Variables - Google Tech Palette */
 :root {
   --bg-color: #0d0e12;
   --card-bg: #16171d;
   --border-color: #222431;
-  --point-emerald: #3ecf8e;
-  --point-emerald-hover: #2fb97c;
-  --heart-color: #ef4444;
+  
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc05;
+  --google-green: #34a853;
+
+  --point-emerald: #4285f4;
+  --point-emerald-hover: #3367d6;
+  --heart-color: #ea4335;
+  
   --text-main: #f8fafc;
   --text-sub: #94a3b8;
   --text-muted: #64748b;
   --input-bg: #1c1d24;
   
-  --gradient-emerald: linear-gradient(135deg, #3ecf8e, #059669);
+  --gradient-google: linear-gradient(90deg, #4285f4 0%, #ea4335 33%, #fbbc05 66%, #34a853 100%);
+  --gradient-blue: linear-gradient(135deg, #4285f4, #1a73e8);
+  --gradient-emerald: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
   --gradient-dark: linear-gradient(180deg, #16171d, #0d0e12);
+  
   --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.6);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
   --radius-lg: 16px;
@@ -95,13 +105,19 @@ a {
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 44px;
+  height: 52px;
 }
 
 .logo-img {
-  height: 40px;
+  height: 48px;
   width: auto;
   object-fit: contain;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.03);
+  opacity: 0.95;
 }
 
 .main-nav {
@@ -132,12 +148,12 @@ a {
   left: 0;
   width: 0;
   height: 2px;
-  background: var(--gradient-emerald);
+  background: var(--gradient-google);
   transition: var(--transition-fast);
 }
 
 .nav-link.active {
-  color: var(--point-emerald);
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -184,13 +200,13 @@ a {
 }
 
 .btn-primary {
-  background: var(--gradient-emerald);
-  color: #000000;
+  background: var(--gradient-blue);
+  color: #ffffff;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(62, 207, 142, 0.4);
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
 }
 
 .btn-secondary {

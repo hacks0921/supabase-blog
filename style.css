@@ -1342,3 +1342,9 @@ textarea.form-control {
   }
 }
 
+/* Toast Fade Out Keyframe */
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+

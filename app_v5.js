@@ -76,7 +76,15 @@ function showToast(message, type = 'info') {
   setTimeout(() => {
     if (toast.parentElement) {
       toast.style.animation = 'fadeOut 0.3s forwards';
-      toast.addEventListener('animationend', () => toast.remove());
+      // 애니메이션 미동작을 대비한 백업 타이머 설정 (350ms 후 강제 삭제)
+      const forceRemove = setTimeout(() => {
+        if (toast.parentElement) toast.remove();
+      }, 350);
+      
+      toast.addEventListener('animationend', () => {
+        clearTimeout(forceRemove);
+        toast.remove();
+      });
     }
   }, 3000);
 }

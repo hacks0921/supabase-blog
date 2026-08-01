@@ -152,10 +152,10 @@ function switchView(viewName, params = {}) {
 function handleRouting() {
   const hash = window.location.hash;
   
-  if (!hash || hash === ROUTE_HASH.LIST) {
-    switchView('list');
-  } else if (hash === ROUTE_HASH.ABOUT) {
+  if (!hash || hash === ROUTE_HASH.ABOUT) {
     switchView('about');
+  } else if (hash === ROUTE_HASH.LIST) {
+    switchView('list');
   } else if (hash === ROUTE_HASH.MONEY) {
     switchView('money-note');
   } else if (hash === ROUTE_HASH.AI) {
@@ -968,7 +968,7 @@ function initApp() {
   
   // 10-2. 글로벌 버튼 및 양식 이벤트 리스너 바인딩
   document.getElementById('logo-btn').addEventListener('click', () => {
-    window.location.hash = ROUTE_HASH.LIST;
+    window.location.hash = ROUTE_HASH.ABOUT;
   });
   
   document.getElementById('btn-show-login').addEventListener('click', () => {

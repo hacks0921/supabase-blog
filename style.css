@@ -92,21 +92,16 @@ a {
 }
 
 .logo {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 800;
-  background: var(--gradient-emerald);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   cursor: pointer;
+  height: 44px;
 }
 
-.logo-icon {
-  font-size: 1.7rem;
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 .main-nav {

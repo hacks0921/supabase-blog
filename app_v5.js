@@ -116,19 +116,19 @@ function switchView(viewName, params = {}) {
     const listSec = document.getElementById('section-posts-list');
     listSec.classList.add('active');
     document.getElementById('nav-link-blog').classList.add('active');
-    document.querySelector('#section-posts-list .list-header h2').innerText = '최신 트렌딩 포스트';
+    document.getElementById('posts-list-title').innerText = '최신 트렌딩 포스트';
     loadPosts();
   } else if (viewName === 'money-note') {
     const listSec = document.getElementById('section-posts-list');
     listSec.classList.add('active');
     document.getElementById('nav-link-money').classList.add('active');
-    document.querySelector('#section-posts-list .list-header h2').innerText = 'Money-note 💰';
+    document.getElementById('posts-list-title').innerText = 'Money-note 💰';
     loadPosts('money-note');
   } else if (viewName === 'ai-note') {
     const listSec = document.getElementById('section-posts-list');
     listSec.classList.add('active');
     document.getElementById('nav-link-ai').classList.add('active');
-    document.querySelector('#section-posts-list .list-header h2').innerText = 'AI-note 🤖';
+    document.getElementById('posts-list-title').innerText = 'AI-note 🤖';
     loadPosts('ai-note');
   } else if (viewName === 'about') {
     const aboutSec = document.getElementById('section-about');

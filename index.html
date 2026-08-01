@@ -14,16 +14,16 @@
   <!-- Header Section -->
   <header class="header-wrapper">
     <div class="header-container">
-      <h1 class="logo" id="logo-btn" role="button" aria-label="메인 페이지로 이동">
-        <span class="logo-icon">⚡</span>미소르 Log
-      </h1>
+      <div class="logo" id="logo-btn" role="button" aria-label="메인 페이지로 이동">
+        <img src="logo.png" alt="미소르 Log 로고" class="logo-img">
+      </div>
       
       <!-- Main Page Navigation -->
       <nav class="main-nav" aria-label="메인 네비게이션">
-        <a href="#list" class="nav-link active" id="nav-link-blog">Blog</a>
         <a href="#about" class="nav-link" id="nav-link-about">About</a>
         <a href="#money-note" class="nav-link" id="nav-link-money">Money-note</a>
         <a href="#ai-note" class="nav-link" id="nav-link-ai">AI-note</a>
+        <a href="#list" class="nav-link active" id="nav-link-blog">Blog</a>
       </nav>
       
       <nav class="nav-actions" aria-label="사용자 네비게이션">
@@ -44,24 +44,9 @@
     
     <!-- 1. Posts List Section -->
     <section id="section-posts-list" class="app-section active">
-      
-      <!-- Hero Welcome Profile Section -->
-      <div class="hero-profile-container" id="hero-welcome-area">
-        <div class="hero-profile-avatar">
-          <img src="서종학.png" alt="서종학 프로필 사진">
-        </div>
-        <div class="hero-profile-details">
-          <h2 class="hero-profile-title">미소르의 기록 공간</h2>
-          <p class="hero-profile-subtitle">생각하고 공부한 것들을 단단하게 기록하는 미소르 Log입니다. 주로 웹 개발, 생성형 AI 학습 노하우 및 스마트한 자산 관리를 기록합니다.</p>
-          <div class="hero-profile-links">
-            <a href="mailto:hacks0921@naver.com" class="hero-link-btn" title="이메일 문의">✉️ Email</a>
-            <a href="https://github.com/hacks0921" target="_blank" class="hero-link-btn" title="깃허브 방문">📁 GitHub</a>
-          </div>
-        </div>
-      </div>
 
       <div class="list-header">
-        <h2>최신 트렌딩 포스트</h2>
+        <h2 id="posts-list-title">최신 트렌딩 포스트</h2>
       </div>
       
       <!-- Spinner -->
@@ -249,20 +234,15 @@
         <div class="about-section-block">
           <h3 class="about-section-title">Channels</h3>
           <div class="channels-grid">
-            <a href="mailto:misor@example.com" class="channel-card">
+            <a href="mailto:hacks0921@naver.com" class="channel-card">
               <div class="channel-icon">✉️</div>
               <div class="channel-name">Email</div>
               <div class="channel-desc">협업 및 비즈니스 제안</div>
             </a>
-            <a href="https://github.com" target="_blank" class="channel-card">
+            <a href="https://github.com/hacks0921" target="_blank" class="channel-card">
               <div class="channel-icon">📁</div>
               <div class="channel-name">GitHub</div>
               <div class="channel-desc">개발 소스코드 및 프로젝트</div>
-            </a>
-            <a href="https://instagram.com" target="_blank" class="channel-card">
-              <div class="channel-icon">📸</div>
-              <div class="channel-name">Instagram</div>
-              <div class="channel-desc">소소한 일상과 영감</div>
             </a>
           </div>
         </div>

@@ -1,22 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 /* CSS Variables */
 :root {
-  --bg-color: #090a0f;
-  --card-bg: #12131a;
-  --border-color: #1f222e;
+  --bg-color: #0d0e12;
+  --card-bg: #16171d;
+  --border-color: #222431;
   --point-emerald: #3ecf8e;
   --point-emerald-hover: #2fb97c;
   --heart-color: #ef4444;
   --text-main: #f8fafc;
   --text-sub: #94a3b8;
   --text-muted: #64748b;
-  --input-bg: #1a1c26;
+  --input-bg: #1c1d24;
   
   --gradient-emerald: linear-gradient(135deg, #3ecf8e, #059669);
-  --gradient-dark: linear-gradient(180deg, #12131a, #090a0f);
-  --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.5);
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --gradient-dark: linear-gradient(180deg, #16171d, #0d0e12);
+  --shadow-main: 0 10px 30px rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
   --radius-lg: 16px;
   --radius-md: 10px;
   --radius-sm: 6px;
@@ -35,7 +36,7 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
@@ -106,6 +107,47 @@ a {
 
 .logo-icon {
   font-size: 1.7rem;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: 2.5rem;
+  margin-right: auto;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-sub);
+  position: relative;
+  padding: 0.5rem 0;
+  transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--text-main);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--gradient-emerald);
+  transition: var(--transition-fast);
+}
+
+.nav-link.active {
+  color: var(--point-emerald);
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  width: 100%;
 }
 
 .nav-actions {
@@ -1083,3 +1125,220 @@ textarea.form-control {
   color: var(--heart-color);
   background: rgba(239, 68, 68, 0.1);
 }
+
+/* ==========================================
+ * About Page Styles
+ * ========================================== */
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.about-profile {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.about-avatar {
+  font-size: 3.5rem;
+  background: var(--gradient-emerald);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(62, 207, 142, 0.3);
+}
+
+.about-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.about-name {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.about-bio {
+  color: var(--text-sub);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.about-section-block {
+  margin-bottom: 4rem;
+}
+
+.about-section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--point-emerald);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Activity */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.activity-date {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  font-size: 1rem;
+  color: var(--text-main);
+}
+
+/* Channels */
+.channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.channel-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: var(--transition-normal);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.channel-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(62, 207, 142, 0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+.channel-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.channel-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.channel-desc {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  line-height: 1.4;
+}
+
+/* Focus Notes */
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.focus-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  transition: var(--transition-normal);
+}
+
+.focus-card:hover {
+  border-color: rgba(62, 207, 142, 0.2);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+
+.focus-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.focus-desc {
+  font-size: 0.95rem;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+
+.focus-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--point-emerald);
+  margin-top: auto;
+  align-self: flex-start;
+  transition: var(--transition-fast);
+}
+
+.focus-link:hover {
+  transform: translateX(4px);
+}
+
+/* Responsive Header */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .main-nav {
+    margin-left: 0;
+    margin-right: 0;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.5rem 0;
+  }
+  
+  .about-profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  
+  .about-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2.8rem;
+  }
+}
+

@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS public.posts (
   author_id uuid REFERENCES auth.users(id) ON DELETE SET NULL,
   author_email text,
   views integer DEFAULT 0 NOT NULL,
+  category text DEFAULT 'general',
   created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
@@ -123,4 +124,7 @@ ON public.post_comments
 FOR DELETE 
 TO authenticated 
 USING (auth.uid() = author_id);
+
+-- [마이그레이션] 기존 posts 테이블이 이미 존재할 경우 카테고리 컬럼 추가 SQL
+-- ALTER TABLE public.posts ADD COLUMN IF NOT EXISTS category text DEFAULT 'general';
 

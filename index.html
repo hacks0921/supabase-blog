@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DevLog | 나만의 모던 블로그 & 게시판</title>
+  <title>미소르 Log | 나만의 모던 블로그 & 게시판</title>
   <meta name="description" content="Supabase와 Vanilla JS로 만든 모던한 벨로그 스타일 다크 테마 블로그 & 게시판 웹앱입니다.">
   
   <!-- CSS Link -->
-  <link rel="stylesheet" href="style.css?v=1.0.1">
+  <link rel="stylesheet" href="style.css?v=1.0.2">
 </head>
 <body>
 
@@ -15,8 +15,16 @@
   <header class="header-wrapper">
     <div class="header-container">
       <h1 class="logo" id="logo-btn" role="button" aria-label="메인 페이지로 이동">
-        <span class="logo-icon">⚡</span>DevLog
+        <span class="logo-icon">⚡</span>미소르 Log
       </h1>
+      
+      <!-- Main Page Navigation -->
+      <nav class="main-nav" aria-label="메인 네비게이션">
+        <a href="#list" class="nav-link active" id="nav-link-blog">Blog</a>
+        <a href="#about" class="nav-link" id="nav-link-about">About</a>
+        <a href="#money-note" class="nav-link" id="nav-link-money">Money-note</a>
+        <a href="#ai-note" class="nav-link" id="nav-link-ai">AI-note</a>
+      </nav>
       
       <nav class="nav-actions" aria-label="사용자 네비게이션">
         <!-- Auth status and Actions -->
@@ -133,6 +141,15 @@
           <input type="hidden" id="form-post-id">
           
           <div class="form-group">
+            <label for="select-post-category">카테고리</label>
+            <select id="select-post-category" class="form-control">
+              <option value="general">일반 (Blog)</option>
+              <option value="money-note">Money-note</option>
+              <option value="ai-note">AI-note</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
             <label for="input-post-title">제목</label>
             <input type="text" id="input-post-title" class="form-control" placeholder="제목을 입력하세요" required>
           </div>
@@ -176,6 +193,78 @@
             <button type="submit" class="btn btn-primary" id="btn-form-submit">저장하기</button>
           </div>
         </form>
+      </div>
+    </section>
+
+    <!-- 4. About Section -->
+    <section id="section-about" class="app-section">
+      <div class="about-container">
+        <!-- Profile Intro -->
+        <div class="about-profile">
+          <div class="about-avatar">⚡</div>
+          <div class="about-profile-info">
+            <h2 class="about-name">미소르 (Misor)</h2>
+            <p class="about-bio">기술과 금융, 그리고 인간의 삶을 더 가치 있게 만드는 기술적 혁신에 관심이 많습니다. 현재는 AI 관련 기술 습득과 효율적인 자산 관리(Money-note)에 초점을 맞추어 공부하고 기록하고 있습니다.</p>
+          </div>
+        </div>
+        
+        <!-- Latest Activity -->
+        <div class="about-section-block">
+          <h3 class="about-section-title">Latest Activity</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <span class="activity-date">2026.07</span>
+              <span class="activity-content">미소르 Log 블로그 엔진 v1.0 런칭</span>
+            </div>
+            <div class="activity-item">
+              <span class="activity-date">2026.05</span>
+              <span class="activity-content">AI 서비스 기획 및 프롬프트 엔지니어링 스터디 리드</span>
+            </div>
+            <div class="activity-item">
+              <span class="activity-date">2026.03</span>
+              <span class="activity-content">금융 데이터 수집 및 자동 분석 툴 프로토타입 개발</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Channels -->
+        <div class="about-section-block">
+          <h3 class="about-section-title">Channels</h3>
+          <div class="channels-grid">
+            <a href="mailto:misor@example.com" class="channel-card">
+              <div class="channel-icon">✉️</div>
+              <div class="channel-name">Email</div>
+              <div class="channel-desc">협업 및 비즈니스 제안</div>
+            </a>
+            <a href="https://github.com" target="_blank" class="channel-card">
+              <div class="channel-icon">📁</div>
+              <div class="channel-name">GitHub</div>
+              <div class="channel-desc">개발 소스코드 및 프로젝트</div>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="channel-card">
+              <div class="channel-icon">📸</div>
+              <div class="channel-name">Instagram</div>
+              <div class="channel-desc">소소한 일상과 영감</div>
+            </a>
+          </div>
+        </div>
+        
+        <!-- My Focus Notes -->
+        <div class="about-section-block">
+          <h3 class="about-section-title">Focus Notes</h3>
+          <div class="focus-grid">
+            <div class="focus-card">
+              <div class="focus-title">Money-note 💰</div>
+              <p class="focus-desc">스마트한 자산 형성과 투자를 위해 금융 트렌드, 가계 정리, 소액 투자 정보 및 경제적 생각들을 기록합니다.</p>
+              <a href="#money-note" class="focus-link">노트 읽기 →</a>
+            </div>
+            <div class="focus-card">
+              <div class="focus-title">AI-note 🤖</div>
+              <p class="focus-desc">하루가 다르게 변하는 생성형 AI 기술, LLM 개발 지식, 자동화 시스템 구축 경험 및 학습 노트를 축적합니다.</p>
+              <a href="#ai-note" class="focus-link">노트 읽기 →</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -229,7 +318,7 @@
       function loadMainApp() {
         console.log('Configuration loaded. Executing main application...');
         const appScript = document.createElement('script');
-        appScript.src = 'app_v5.js?v=1.0.0';
+        appScript.src = 'app_v5.js?v=1.0.2';
         document.head.appendChild(appScript);
       }
       

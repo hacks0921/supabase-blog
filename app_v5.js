@@ -18,7 +18,10 @@ const ROUTE_HASH = {
   LIST: '#list',
   WRITE: '#write',
   DETAIL: '#post/',
-  EDIT: '#edit/'
+  EDIT: '#edit/',
+  ABOUT: '#about',
+  MONEY: '#money-note',
+  AI: '#ai-note'
 };
 
 // 2. Supabase 클라이언트 초기화
@@ -97,11 +100,32 @@ function switchView(viewName, params = {}) {
   // 모든 섹션 비활성화
   document.querySelectorAll('.app-section').forEach(sec => sec.classList.remove('active'));
   
+  // 네비게이션 액티브 클래스 초기화
+  document.querySelectorAll('.main-nav .nav-link').forEach(link => link.classList.remove('active'));
+  
   // 타겟 섹션 활성화 및 데이터 로딩
   if (viewName === 'list') {
     const listSec = document.getElementById('section-posts-list');
     listSec.classList.add('active');
+    document.getElementById('nav-link-blog').classList.add('active');
+    document.querySelector('#section-posts-list .list-header h2').innerText = '최신 트렌딩 포스트';
     loadPosts();
+  } else if (viewName === 'money-note') {
+    const listSec = document.getElementById('section-posts-list');
+    listSec.classList.add('active');
+    document.getElementById('nav-link-money').classList.add('active');
+    document.querySelector('#section-posts-list .list-header h2').innerText = 'Money-note 💰';
+    loadPosts('money-note');
+  } else if (viewName === 'ai-note') {
+    const listSec = document.getElementById('section-posts-list');
+    listSec.classList.add('active');
+    document.getElementById('nav-link-ai').classList.add('active');
+    document.querySelector('#section-posts-list .list-header h2').innerText = 'AI-note 🤖';
+    loadPosts('ai-note');
+  } else if (viewName === 'about') {
+    const aboutSec = document.getElementById('section-about');
+    aboutSec.classList.add('active');
+    document.getElementById('nav-link-about').classList.add('active');
   } else if (viewName === 'detail') {
     const detailSec = document.getElementById('section-post-detail');
     detailSec.classList.add('active');
@@ -122,6 +146,12 @@ function handleRouting() {
   
   if (!hash || hash === ROUTE_HASH.LIST) {
     switchView('list');
+  } else if (hash === ROUTE_HASH.ABOUT) {
+    switchView('about');
+  } else if (hash === ROUTE_HASH.MONEY) {
+    switchView('money-note');
+  } else if (hash === ROUTE_HASH.AI) {
+    switchView('ai-note');
   } else if (hash.startsWith(ROUTE_HASH.DETAIL)) {
     const id = hash.replace(ROUTE_HASH.DETAIL, '');
     switchView('detail', { id: parseInt(id) });
@@ -292,7 +322,7 @@ function updateAuthUI(session) {
 
 // 8. 게시글 데이터 연동 로직
 // 8-1. 목록 조회
-async function loadPosts() {
+async function loadPosts(category = null) {
   if (!supabaseClient) return;
   
   const spinner = document.getElementById('posts-list-spinner');
@@ -305,10 +335,16 @@ async function loadPosts() {
   
   try {
     // posts와 post_likes 관계를 조인하여 좋아요 레코드를 함께 가져옴
-    const { data: posts, error } = await supabaseClient
+    let query = supabaseClient
       .from('posts')
       .select('*, post_likes(id, user_id)')
       .order('created_at', { ascending: false });
+      
+    if (category) {
+      query = query.eq('category', category);
+    }
+    
+    const { data: posts, error } = await query;
       
     if (error) throw error;
     
@@ -591,6 +627,7 @@ async function setupPostForm(id) {
         return;
       }
       
+      document.getElementById('select-post-category').value = post.category || 'general';
       document.getElementById('input-post-title').value = post.title;
       document.getElementById('textarea-post-content').value = post.content;
     } catch (error) {
@@ -602,6 +639,8 @@ async function setupPostForm(id) {
     // 새 글 작성 모드
     formTitle.innerText = '새 글 작성하기';
     document.getElementById('form-post-id').value = '';
+    // 기본 카테고리는 general(Blog)
+    document.getElementById('select-post-category').value = 'general';
   }
 }
 
@@ -609,6 +648,7 @@ async function handleFormSubmit(e) {
   e.preventDefault();
   if (!supabaseClient || !STATE.session) return;
   
+  const category = document.getElementById('select-post-category').value;
   const title = document.getElementById('input-post-title').value.trim();
   const content = document.getElementById('textarea-post-content').value.trim();
   const postId = document.getElementById('form-post-id').value;
@@ -627,7 +667,7 @@ async function handleFormSubmit(e) {
       // 수정 요청
       const { error } = await supabaseClient
         .from('posts')
-        .update({ title, content })
+        .update({ category, title, content })
         .eq('id', parseInt(postId));
         
       if (error) throw error;
@@ -638,6 +678,7 @@ async function handleFormSubmit(e) {
       const { data, error } = await supabaseClient
         .from('posts')
         .insert([{
+          category,
           title,
           content,
           author_id: STATE.session.user.id,
@@ -656,7 +697,7 @@ async function handleFormSubmit(e) {
     }
   } catch (error) {
     logError('Save Post', error);
-    showToast('게시글 저장에 실패했습니다.', 'error');
+    showToast('게시글 저장에 실패했습니다. DB 설정을 확인해 주세요.', 'error');
   } finally {
     submitBtn.disabled = false;
     submitBtn.innerText = '저장하기';

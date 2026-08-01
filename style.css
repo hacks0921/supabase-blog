@@ -265,7 +265,7 @@ a {
 
 .post-card {
   background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-lg);
   padding: 0;
   display: flex;
@@ -273,7 +273,7 @@ a {
   min-height: 340px;
   cursor: pointer;
   transition: var(--transition-normal);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -1339,6 +1339,127 @@ textarea.form-control {
     width: 80px;
     height: 80px;
     font-size: 2.8rem;
+  }
+}
+
+/* Hero Welcome Profile Style */
+.hero-profile-container {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 3rem 2.5rem;
+  margin-bottom: 3.5rem;
+  background: linear-gradient(135deg, rgba(22, 23, 29, 0.7) 0%, rgba(13, 14, 18, 0.7) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(62, 207, 142, 0.3);
+  box-shadow: 0 0 20px rgba(62, 207, 142, 0.15);
+  flex-shrink: 0;
+}
+
+.hero-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hero-profile-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: var(--gradient-emerald);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-profile-subtitle {
+  color: var(--text-sub);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+.hero-profile-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.hero-link-btn {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-sub);
+  transition: var(--transition-fast);
+}
+
+.hero-link-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+/* About Page Avatar Image Style */
+.about-avatar-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(62, 207, 142, 0.3);
+  box-shadow: 0 0 20px rgba(62, 207, 142, 0.15);
+  flex-shrink: 0;
+}
+
+.about-avatar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive adjustment for Hero welcome section */
+@media (max-width: 768px) {
+  .hero-profile-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .hero-profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .hero-profile-links {
+    justify-content: center;
+  }
+  
+  .about-avatar-img {
+    width: 90px;
+    height: 90px;
   }
 }
 
